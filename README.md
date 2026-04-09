@@ -529,7 +529,7 @@ Both A2A directions are operational and ready for demo.
 | Bridge adapter layer | ✅ Done |
 | E2E test suite 6/6 | ✅ Done |
 | Main README | ✅ Done |
-| Sub-folder READMEs | 🔲 In progress |
+| Sub-folder READMEs | ✅ Done |
 | CF bridge app deployment | 🔲 Pending |
 | SF Joule HTTP skill registration | 🔲 Pending SF admin |
 | Real Eerly AI Studio integration | 🔲 Pending Accely API docs |

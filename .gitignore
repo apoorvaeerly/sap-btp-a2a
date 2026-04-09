@@ -1,0 +1,5 @@
+.env 
+__pycache__/ 
+*.pyc 
+ngrok/ngrok.exe 
+node_modules/ 

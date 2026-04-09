@@ -1,0 +1,14 @@
+[theme]
+primaryColor             = "#0070F2"
+backgroundColor          = "#080818"
+secondaryBackgroundColor = "#0F0F28"
+textColor                = "#E8E8FF"
+font                     = "sans serif"
+
+[server]
+port            = 8501
+headless        = false
+fileWatcherType = "poll"
+
+[browser]
+gatherUsageStats = false

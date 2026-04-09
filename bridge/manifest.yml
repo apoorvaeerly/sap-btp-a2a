@@ -1,0 +1,49 @@
+---
+applications:
+  - name: eerly-sap-btp-integration
+    memory: 1G
+    disk_quota: 1G
+    instances: 1
+    random-route: true
+    buildpacks:
+      - python_buildpack
+    # app/main.py exists → module path is app.main:app ✅
+    # 'python -m uvicorn' ensures the CF buildpack venv's uvicorn is used
+    command: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    # 'process' health-check keeps app alive longer for debugging
+    health-check-type: process
+    env:
+      # ── LLM Provider ──────────────────────────────────────────
+      LLM_PROVIDER: sap
+      SAP_MODEL_NAME: gpt-4.1
+
+      # ── SAP AI Core (Generative AI Hub) ──────────────────────
+      AI_CORE_CLIENT_ID: "sb-c1484f1e-e087-43d4-b19a-d67d839cb237!b618599|aicore!b164"
+      AI_CORE_CLIENT_SECRET: "06327169-f237-4492-a5db-0b5810d729e5$XieSMuyKTNWp8Pue33xdHmrmgpSJTcMnNlIVC9hDvMI="
+      AI_CORE_AUTH_URL: "https://eerly-ai-sap-ai-core-zmc02lvt.authentication.us10.hana.ondemand.com/oauth/token"
+      AI_CORE_API_URL: "https://api.ai.prod.us-east-1.aws.ml.hana.ondemand.com"
+      AI_CORE_RESOURCE_GROUP: default
+
+      # ── SAP BTP Service Manager ───────────────────────────────
+      BTP_CLIENT_ID: "sb-97331e3f-2373-4885-956c-c1f9463f93e8!b613352|service-manager!b1476"
+      BTP_CLIENT_SECRET: "4ba8b1e5-0765-481f-977e-d07b10f143fc$v-OHT0Z-0doEnqecZCfYjFclTopVaeYuBn-Y971mMNA="
+      BTP_AUTH_URL: "https://4bbddcadtrial.authentication.us10.hana.ondemand.com/oauth/token"
+      BTP_API_BASE_URL: "https://service-manager.cfapps.us10.hana.ondemand.com"
+
+      # ── SAP Usage Data Management ─────────────────────────────
+      USAGE_CLIENT_ID: "sb-16a1106d-511f-4ce6-a39e-a9edd2ed5153!b650096|uas!b36585"
+      USAGE_CLIENT_SECRET: "94de7947-94f0-4406-8d33-f5e306202bf4$vob6IEuUrBDpyAAU9bV0A9hhsWIZGgBX8ZVciG3WAxA="
+      USAGE_AUTH_URL: "https://4bbddcadtrial-ga.authentication.eu10.hana.ondemand.com/oauth/token"
+      USAGE_API_BASE_URL: "https://uas-reporting.cfapps.eu10.hana.ondemand.com"
+
+      # ── Purchased Token Allocation ────────────────────────────
+      PURCHASED_TOKENS: "50000"
+
+      # ── Langfuse Tracing ──────────────────────────────────────
+      LANGFUSE_PUBLIC_KEY: "pk-lf-57011bdc-359c-421c-ac47-5ac040027768"
+      LANGFUSE_SECRET_KEY: "sk-lf-234199eb-dfe6-42e7-8cab-eb88b3fdcc2d"
+      LANGFUSE_HOST: "http://13.233.148.140:3000"
+
+      # ── Python runtime flags ──────────────────────────────────
+      PYTHONUNBUFFERED: "true"
+      PYTHONDONTWRITEBYTECODE: "1"
